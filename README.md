@@ -2,7 +2,7 @@
 
 ***
 
-The Commonality Lab is a comprehensive lab environment designed to help bridge the gap between academic coursework and real-world industry experience in Network Engineering, System Administration, and the general Cybersecurity industry. 
+The Commonality Lab is a student-driven capstone lab environment designed for the pursuit of advanced certifications and consistent scalability in relation to my career.
 
 The information in this repository is subject to change at any time since it is used for practice.
 
