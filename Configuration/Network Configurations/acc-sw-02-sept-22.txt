@@ -1,0 +1,317 @@
+
+!
+! Last configuration change at 03:43:02 UTC Sun Jan 22 2006 by connor.jay
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname ACC-SW-02
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$hLE2$A/CzEYylBa2XimcwSCMly.
+!
+username connor.jay privilege 15 secret 5 $1$HMnV$rS/NNOwN2kjh4LHgqrpA01
+username cisco secret 5 $1$9YkD$73vOQyxdU0iAkbA5DfoC3.
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authentication login console local
+aaa authorization console
+aaa authorization exec default local 
+!
+!
+!
+!
+!
+!
+aaa session-id common
+system mtu routing 1500
+!
+!
+!
+!
+ip routing
+!
+!
+!
+ip domain-name INTERNAL.COMMONALITYLAB.COM
+ip name-server 10.100.30.10
+ip name-server 10.100.30.11
+vtp domain internal.commonalitylab.com
+vtp mode off
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-569752448
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-569752448
+ revocation-check none
+ rsakeypair TP-self-signed-569752448
+!
+!
+crypto pki certificate chain TP-self-signed-569752448
+ certificate self-signed 01
+  30820229 30820192 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 35363937 35323434 38301E17 0D303630 31303230 30303230 
+  375A170D 32303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F 
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3536 39373532 
+  34343830 819F300D 06092A86 4886F70D 01010105 0003818D 00308189 02818100 
+  A7A492EF 1F97A403 C0B8B34A 85B8601E D54E1BF9 A2558853 52DC901A 722E8338 
+  A36FCD14 4E11F406 F0528B8E 07F89E09 B580CCB4 8784B704 4E21AEA1 0F75E839 
+  F83AE638 4FB32B0D C02AB24A C89ABA53 3E41D749 2D2B04CE 452DA2F4 BFF935D7 
+  039B7255 7C7212D4 568C4407 D7F60CC3 7F650DC1 7C849F23 CFFB6B13 7B354919 
+  02030100 01A35330 51300F06 03551D13 0101FF04 05300301 01FF301F 0603551D 
+  23041830 168014C2 45C56ED2 4B7E45C1 7B1741CE B9607539 C1F8BD30 1D060355 
+  1D0E0416 0414C245 C56ED24B 7E45C17B 1741CEB9 607539C1 F8BD300D 06092A86 
+  4886F70D 01010505 00038181 000DDACB 5DBE45CE 584A5E6D D8E5E54D BADFAB2F 
+  38C2670A ED67D2BB AD6F6969 32322281 4BBDCA99 28C847FA 2B7B86B8 98A00A1A 
+  1003C42A A5AAE1ED 913849AC 13E090DD 9A387752 79206C97 9E5000A4 7B7B2FE8 
+  D523BE3E 7D5FD3B2 9A664259 F40472BC EDA25768 9D47F9F8 7ED5294C 27118159 
+  2F502F7D EF21E69A 6875F8F6 9F
+  	quit
+license boot level ipservices
+!
+!
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+vlan internal allocation policy ascending
+!
+vlan 200 
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.100.225.248 255.255.255.0
+!
+interface Port-channel1
+ no switchport
+ ip address 10.100.10.62 255.255.255.252
+ ip ospf 10 area 15
+!
+interface Port-channel2
+ no switchport
+ ip address 10.100.10.66 255.255.255.252
+!
+interface FastEthernet0
+ no ip address
+ no ip route-cache
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface GigabitEthernet0/3
+!
+interface GigabitEthernet0/4
+!
+interface GigabitEthernet0/5
+!
+interface GigabitEthernet0/6
+!
+interface GigabitEthernet0/7
+!
+interface GigabitEthernet0/8
+!
+interface GigabitEthernet0/9
+!
+interface GigabitEthernet0/10
+!
+interface GigabitEthernet0/11
+!
+interface GigabitEthernet0/12
+!
+interface GigabitEthernet0/13
+!
+interface GigabitEthernet0/14
+!
+interface GigabitEthernet0/15
+!
+interface GigabitEthernet0/16
+!
+interface GigabitEthernet0/17
+!
+interface GigabitEthernet0/18
+!
+interface GigabitEthernet0/19
+!
+interface GigabitEthernet0/20
+!
+interface GigabitEthernet0/21
+!
+interface GigabitEthernet0/22
+!
+interface GigabitEthernet0/23
+!
+interface GigabitEthernet0/24
+!
+interface GigabitEthernet0/25
+!
+interface GigabitEthernet0/26
+!
+interface GigabitEthernet0/27
+!
+interface GigabitEthernet0/28
+!
+interface GigabitEthernet0/29
+ no switchport
+ no ip address
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/30
+ no switchport
+ no ip address
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/31
+ no switchport
+ no ip address
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/32
+ no switchport
+ no ip address
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/33
+ no switchport
+ no ip address
+ channel-group 2 mode active
+!
+interface GigabitEthernet0/34
+ no switchport
+ no ip address
+ channel-group 2 mode active
+!
+interface GigabitEthernet0/35
+ no switchport
+ no ip address
+ channel-group 2 mode active
+!
+interface GigabitEthernet0/36
+ no switchport
+ no ip address
+ channel-group 2 mode active
+!
+interface GigabitEthernet0/37
+!
+interface GigabitEthernet0/38
+!
+interface GigabitEthernet0/39
+!
+interface GigabitEthernet0/40
+!
+interface GigabitEthernet0/41
+!
+interface GigabitEthernet0/42
+!
+interface GigabitEthernet0/43
+!
+interface GigabitEthernet0/44
+!
+interface GigabitEthernet0/45
+ switchport access vlan 200
+ switchport mode access
+ no vtp
+!
+interface GigabitEthernet0/46
+ switchport access vlan 200
+ no vtp
+!
+interface GigabitEthernet0/47
+ switchport access vlan 200
+ switchport mode access
+ no vtp
+!
+interface GigabitEthernet0/48
+ switchport access vlan 225
+!
+interface GigabitEthernet1/1
+!
+interface GigabitEthernet1/2
+!
+interface GigabitEthernet1/3
+!
+interface GigabitEthernet1/4
+!
+interface TenGigabitEthernet1/1
+!
+interface TenGigabitEthernet1/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan20
+ ip address 10.100.20.248 255.255.255.0
+!
+interface Vlan30
+ ip address 10.100.30.248 255.255.255.0
+!
+interface Vlan40
+ ip address 10.100.40.248 255.255.255.0
+!
+interface Vlan200
+ ip address 10.100.200.1 255.255.255.0
+!
+router ospf 10
+ network 10.100.10.60 0.0.0.3 area 15
+ network 10.100.10.64 0.0.0.3 area 15
+ network 10.100.200.101 0.0.0.0 area 15
+ network 10.100.200.102 0.0.0.0 area 15
+ network 10.100.200.0 0.0.0.255 area 15
+ network 10.100.225.248 0.0.0.0 area 15
+!
+ip default-gateway 10.100.10.1
+ip forward-protocol nd
+!
+!
+ip http server
+ip http secure-server
+ip route 0.0.0.0 0.0.0.0 Port-channel1
+ip ssh time-out 60
+ip ssh version 2
+ip ssh pubkey-chain
+  username connor.jay
+   key-hash ssh-rsa E84228566B96D0DBD70771DACE7FAF27 
+!
+!
+!
+!
+!
+!
+banner login  THIS APPLIANCE IS A PART OF THE COMMONALITY LAB ENVIRONMENT. ANY UNAUTHORIZED ACCESS WILL BE DEALT WITH AND PUNISHED UNDER VERMONT STATUTE 13 V.S.A. & 4102 
+!
+line con 0
+ exec-timeout 15 0
+ login authentication console
+line vty 5 15
+!
+!
+end

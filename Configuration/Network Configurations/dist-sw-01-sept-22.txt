@@ -1,0 +1,416 @@
+
+!
+! Last configuration change at 02:40:12 UTC Fri Mar 26 1993 by connor.jay
+!
+version 15.0
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service unsupported-transceiver
+!
+hostname DIST-SW-01
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition DIST-SW-01-MGMT
+ !
+ address-family ipv4
+ exit-address-family
+!
+enable secret 5 $1$T3a9$AdtVApppk4ehKTAPeyYtF/
+!
+username connor.jay privilege 15 secret 5 $1$CIrc$p0CPcpyXChT8J6zgoBYwh0
+username cisco secret 5 $1$NbID$.qola2PgYBPEtVh6QFBg1.
+aaa new-model
+!
+!
+aaa authentication login default local
+!
+!
+!
+!
+!
+aaa session-id common
+system mtu routing 1500
+vtp interface po1
+vtp domain internal.commonalitylab.com
+vtp mode off
+ip routing
+ip domain-name INTERNAL.COMMONALITYLAB.COM
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-87880192
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-87880192
+ revocation-check none
+ rsakeypair TP-self-signed-87880192
+!
+!
+crypto pki certificate chain TP-self-signed-87880192
+ certificate self-signed 01
+  3082025C 308201C5 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  2F312D30 2B060355 04031324 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 38373838 30313932 301E170D 39333033 30313030 30333035 
+  5A170D32 30303130 31303030 3030305A 302F312D 302B0603 55040313 24494F53 
+  2D53656C 662D5369 676E6564 2D436572 74696669 63617465 2D383738 38303139 
+  3230819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 8100EDC9 
+  60B849EA E1A53D9D 65F40A5A 48381B5A D1BCC358 12DC238D 9B02F1E3 52E3954E 
+  ECA36D95 3EA2C38A D2B52565 D0441EFF 77B5E493 442E7CE7 EEABDD27 DD840E04 
+  13EE123C BB95A21A 00DEC503 35EDC4DD 6D0AA78F 0CE096DA 3C28E309 2C4B244E 
+  849E73B0 3A96964E 432C08E1 476FA81F 1A84A2EA 7CAA2E5A 1762CBEF 5F150203 
+  010001A3 81873081 84300F06 03551D13 0101FF04 05300301 01FF3031 0603551D 
+  11042A30 28822644 4953542D 53572D30 312E494E 5445524E 414C2E43 4F4D4D4F 
+  4E414C49 54594C41 422E434F 4D301F06 03551D23 04183016 80144B25 B5341F74 
+  4BF1AFCF 7440EB9C 8334B63D 3751301D 0603551D 0E041604 144B25B5 341F744B 
+  F1AFCF74 40EB9C83 34B63D37 51300D06 092A8648 86F70D01 01040500 03818100 
+  D31EC82A D0F4EDB3 D8E0415A F2931A77 21BFD379 ECF492E1 DF31C56B 342AEA1F 
+  4CF5E034 77F2A491 2D52C1A4 BF0764A4 7ED89B16 BF43A46B 720C1A33 A7DFB159 
+  4A4F4162 9EA716A8 30F7B85C 09864C65 32A30333 65427ED3 C14749F9 8CE9900C 
+  AFDF5D87 F687F4D3 352799D3 9D1EDD70 8AFD5D2A EA32FD3D BDD736E0 76D7A6D0
+  	quit
+!
+!
+!
+no errdisable detect cause gbic-invalid
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+vlan 10
+ name HOSTS
+!
+vlan 20
+ name GUESTS
+!
+vlan 30
+ name SERVERS
+!
+vlan 40
+ name LEISURE
+!
+vlan 200 
+!
+vlan 225
+ name MGMT
+!
+vlan 999
+ name NATIVE-VLAN
+!
+ip ssh time-out 60
+ip ssh version 2
+ip ssh pubkey-chain
+  username connor.jay
+   key-hash ssh-rsa E84228566B96D0DBD70771DACE7FAF27 
+   key-hash ssh-rsa C24695C6135118C7DBFEAF7F1EE120DA 
+  quit
+!
+class-map match-any SSH-NON-MGMT
+  match access-group name SSH-NON-MGMT
+class-map match-all SSH-MGMT
+  match access-group name SSH-MGMT
+!
+policy-map SSH_PM
+ class SSH-MGMT
+ class SSH-NON-MGMT
+ class class-default
+!
+!
+!
+!
+!
+!
+!
+interface Loopback2
+ ip address 10.100.225.245 255.255.255.0
+!
+interface Port-channel1
+ no switchport
+ ip address 10.100.10.34 255.255.255.252
+!
+interface Port-channel2
+ no switchport
+ ip address 10.100.10.38 255.255.255.252
+!
+interface Port-channel4
+ no switchport
+ ip address 10.100.10.53 255.255.255.252
+!
+interface Port-channel5
+ no switchport
+ ip address 10.100.10.61 255.255.255.252
+ ip ospf 10 area 15
+!
+interface GigabitEthernet0/1
+ no switchport
+ no ip address
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/2
+ no switchport
+ no ip address
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/3
+ no switchport
+ no ip address
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/4
+ no switchport
+ no ip address
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/5
+ no switchport
+ no ip address
+ shutdown
+ channel-group 2 mode active
+!
+interface GigabitEthernet0/6
+ no switchport
+ no ip address
+ channel-group 2 mode active
+!
+interface GigabitEthernet0/7
+ no switchport
+ no ip address
+ shutdown
+ channel-group 2 mode active
+!
+interface GigabitEthernet0/8
+ no switchport
+ no ip address
+ channel-group 2 mode active
+!
+interface GigabitEthernet0/9
+ no switchport
+ no ip address
+ shutdown
+ duplex full
+!
+interface GigabitEthernet0/10
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 666
+ switchport trunk allowed vlan 10,20,30,40,50
+!
+interface GigabitEthernet0/11
+ no switchport
+ no ip address
+ shutdown
+ duplex full
+!
+interface GigabitEthernet0/12
+ no switchport
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/13
+ no switchport
+ no ip address
+ shutdown
+ speed 1000
+ duplex full
+!
+interface GigabitEthernet0/14
+ no switchport
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/15
+ no switchport
+ no ip address
+ shutdown
+ duplex full
+!
+interface GigabitEthernet0/16
+ no switchport
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/17
+ no switchport
+ no ip address
+ channel-group 4 mode active
+!
+interface GigabitEthernet0/18
+ no switchport
+ no ip address
+ channel-group 4 mode active
+!
+interface GigabitEthernet0/19
+ no switchport
+ no ip address
+ channel-group 4 mode active
+!
+interface GigabitEthernet0/20
+ no switchport
+ no ip address
+ channel-group 4 mode active
+!
+interface GigabitEthernet0/21
+ no switchport
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/22
+ no switchport
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/23
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/24
+ no switchport
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/25
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/26
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/27
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/28
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/29
+ no switchport
+ no ip address
+ channel-group 5 mode active
+!
+interface GigabitEthernet0/30
+ no switchport
+ no ip address
+ channel-group 5 mode active
+!
+interface GigabitEthernet0/31
+ no switchport
+ no ip address
+ channel-group 5 mode active
+!
+interface GigabitEthernet0/32
+ no switchport
+ no ip address
+ channel-group 5 mode active
+!
+interface GigabitEthernet0/33
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/34
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/35
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/36
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/37
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/38
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/39
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/40
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/41
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/42
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/43
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/44
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/45
+ no switchport
+ no ip address
+!
+interface GigabitEthernet0/46
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/47
+ switchport trunk native vlan 666
+!
+interface GigabitEthernet0/48
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 666
+ switchport trunk allowed vlan 10,20,30,40,50
+ switchport mode trunk
+!
+interface GigabitEthernet0/49
+!
+interface GigabitEthernet0/50
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 10
+!
+interface GigabitEthernet0/51
+!
+interface GigabitEthernet0/52
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan200
+ ip address 10.100.200.245 255.255.255.0
+!
+interface Vlan225
+ no ip address
+!
+router ospf 10
+ network 10.100.10.32 0.0.0.3 area 15
+ network 10.100.10.36 0.0.0.3 area 15
+ network 10.100.10.52 0.0.0.3 area 15
+ network 10.100.10.60 0.0.0.3 area 15
+ network 10.100.225.245 0.0.0.0 area 15
+!
+ip http server
+ip http secure-server
+!
+!
+ip route 0.0.0.0 0.0.0.0 Port-channel1
+ip route 0.0.0.0 0.0.0.0 Port-channel2 2
+!
+ip access-list extended SSH-MGMT
+ permit tcp 10.100.30.0 0.0.0.255 any eq 22
+ permit tcp 10.100.225.0 0.0.0.255 any eq 22
+!
+logging esm config
+!
+radius-server vsa send authentication
+!
+!
+!
+banner login  THIS APPLIANCE IS A PART OF THE COMMONALITY LAB ENVIRONMENT. ANY UNAUTHORIZED ACCESS WILL BE DEALT WITH AND PUNISHED UNDER VERMONT STATUTE 13 V.S.A. & 4102 
+!
+line con 0
+ exec-timeout 60 0
+line vty 0 4
+ exec-timeout 60 0
+ transport input ssh
+line vty 5 15
+ exec-timeout 60 0
+ transport input ssh
+!
+end

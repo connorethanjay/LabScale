@@ -1,0 +1,181 @@
+
+!
+! Last configuration change at 16:41:49 UTC Sat Aug 30 2025 by connor.jay
+!
+version 16.9
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+platform punt-keepalive disable-kernel-core
+!
+hostname ROUTER-01
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret 5 $1$o/d/$NWd1.62k4Fxryo.Nu7FyT0
+!
+aaa new-model
+!
+!
+aaa authentication login default local
+!
+!
+!
+!
+!
+!
+aaa session-id common
+!
+ip name-server 10.100.30.10 10.100.30.11
+ip domain name INTERNAL.COMMONALITYLAB.COM
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+multilink bundle-name authenticated
+!
+!
+!
+crypto pki trustpoint TP-self-signed-2958948040
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2958948040
+ revocation-check none
+ rsakeypair TP-self-signed-2958948040
+!
+!
+crypto pki certificate chain TP-self-signed-2958948040
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 32393538 39343830 3430301E 170D3235 30383233 32303335 
+  30385A17 0D333030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 39353839 
+  34383034 30308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 
+  0A028201 0100DCF4 0DD9C224 C556D416 3EA871FE D19043EE B20C5904 ED31C5DA 
+  B266C6EF 4077AECF 980732EB DE26AA5E 3A194AF6 14A97265 68CA2253 8A348EDD 
+  62B98603 D389C85F 797CBBD6 3CE1EDA5 133A2D5E 7B9E7167 EA5198C5 135AD74F 
+  3C887D57 EE29030D 497719E6 7EA17D40 92249421 108A78F5 E2E2D5D9 6191E53B 
+  3EE5E7A1 4A38AE27 3F45758C DB29348F A4F10065 24712E66 2A32C136 3484AE30 
+  6D4DAF2E 771B0D01 C7261FE5 E4F99EEB FE9C46D8 ED7CC868 3571E445 CB3D0932 
+  634658B0 023640BC 2D4FCCBA DAAFA154 6A0522BF DF9526F8 F6B14EA3 F0143560 
+  C6EE4DAD 3CAAAAE6 7A44B002 56ED01DB 6B7A67AD 4981BE62 914F4DB3 FC019A9F 
+  F65D9074 2CC10203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 
+  301F0603 551D2304 18301680 1418B0E8 2BEB7885 A51B35D2 91D4E51C 40B7CE94 
+  3A301D06 03551D0E 04160414 18B0E82B EB7885A5 1B35D291 D4E51C40 B7CE943A 
+  300D0609 2A864886 F70D0101 05050003 82010100 95A3EA73 71E4A7B6 9BBCC960 
+  BA37580D 334BDA7B B4769711 37D47484 F54C59AD 87C127FE 46020C65 7289F299 
+  B0F2118F 6388975F 0AFC10BA 8D4FE5A2 0ED9AE58 86A41595 00521D32 F6E546F4 
+  212E706B 681FDA0C 5D1FC24E C03CBB1F F17C9F99 22FE247E AB70795D 0771D60E 
+  DAD0CBFB 096ED455 117163A7 EF34BDA1 59C64073 3BCC354C 6BB58E04 E1E7FBD3 
+  788B02F2 727CD142 A079D148 7C5AB4EB 831115FB F559F33B D2AF7587 C6CA4E92 
+  8F53806E ADD72C81 F44138ED 7BD5BA1A 01ADD771 60B7283F 362FC6BF 9C7D85D6 
+  5706A680 BA9EC179 D07A3C17 8B911706 9BCE40F8 B073CD74 49D3712A 13639AEC 
+  4305B6D1 13CB0D66 605C19F5 9250794D F89F39A0
+  	quit
+!
+license udi pid ISR4331/K9 sn FDO222840LK
+no license smart enable
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+!
+username connor.jay privilege 15 secret 5 $1$JrHj$u.0vaTpTnxJUYcupktZDd0
+username cisco secret 5 $1$r0um$7cM2daoLG6JRtHIP3OzJb0
+!
+redundancy
+ mode none
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.100.225.241 255.255.255.0
+!
+interface GigabitEthernet0/0/0
+ ip address 10.100.10.13 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet0/0/1
+ ip address 10.100.10.17 255.255.255.252
+ negotiation auto
+!
+interface GigabitEthernet0/0/2
+ ip address 10.100.10.2 255.255.255.248
+ negotiation auto
+ vrrp 10 ip 10.100.10.5
+ vrrp 10 authentication text Maker90!
+!
+interface GigabitEthernet0
+ vrf forwarding Mgmt-intf
+ no ip address
+ negotiation auto
+!
+router ospf 10
+ network 10.100.10.12 0.0.0.3 area 20
+ network 10.100.10.16 0.0.0.3 area 20
+ network 10.100.225.241 0.0.0.0 area 20
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip http client source-interface GigabitEthernet0/0/2
+ip route 0.0.0.0 0.0.0.0 10.100.10.1
+ip route 10.100.10.1 255.255.255.255 GigabitEthernet0/0/2
+!
+ip ssh version 2
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+banner login C THIS APPLIANCE IS A PART OF THE COMMONALITY LAB ENVIRONMENT. ANY UNAUTHORIZED ACCESS WILL BE DEALT WITH AND PUNISHED UNDER VERMONT STATUTE 13 V.S.A. & 4102
+!
+line con 0
+ exec-timeout 15 0
+ transport input none
+ escape-character 3
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ exec-timeout 15 0
+ transport input ssh
+line vty 5 15
+ exec-timeout 15 0
+ transport input ssh
+!
+!
+!
+!
+!
+!
+end
