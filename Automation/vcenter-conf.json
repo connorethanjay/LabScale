@@ -1,0 +1,6 @@
+{ "vcenter": [
+{
+    "vcenterhost" : "vcsa.internal.commonalitylab.com",
+    "vcenteradmin" : "connor.jay@internal.commonalitylab.com"
+}]
+}
