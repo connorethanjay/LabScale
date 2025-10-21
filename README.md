@@ -1,4 +1,4 @@
-<img alt="commonalitylab-com-02-raster" src="https://github.com/user-attachments/assets/e29d8a68-7053-426b-9e0f-06addcb59c63"/>
+<img alt="Commonality-Lockup-01" src="https://github.com/user-attachments/assets/e639cd70-1839-471a-8652-2cb5aa5104e9" />
 
 ***
 
