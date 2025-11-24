@@ -4,8 +4,8 @@
 
 The Commonality Lab is a student-driven capstone lab environment designed for the pursuit of advanced certifications and consistent scalability in relation to my career.
 
-The information in this repository is subject to change at any time since it is used for practice.
+The information in this Github repository is subject to change at any time since the Commonality Lab is an ever-growing network lab environment used for practice / testing purposes.
 
-## Where can I find the documentation?
+## Where can I find your documentation?
 
-Please refer to the Wiki tab for documentation, and the Code tab for any reference files, which will be added as time goes on.
+Please refer to the Wiki tab for written documentation, and the Code tab for any referenced files.
