@@ -1,10 +1,10 @@
-<img alt="Commonality-Lockup-01" src="https://github.com/user-attachments/assets/e639cd70-1839-471a-8652-2cb5aa5104e9" />
+<img alt="LabScale" src="https://github.com/user-attachments/assets/24be9c7b-b6ca-428f-af8b-292d4e97bc3e" />
 
 ***
 
-The Commonality Lab is a student-driven capstone lab environment designed for the pursuit of advanced certifications and consistent scalability in relation to my career.
+LabScale is a cloud infrastructure project designed to provide educational institutions and businesses with dedicated, scalable environments for hands-on technical training & virtualization workloads.
 
-The information in this Github repository is subject to change at any time since the Commonality Lab is an ever-growing network lab environment used for practice / testing purposes.
+The information in this Github repository is subject to change at any time since this project is currently a work-in-progress.
 
 ## Where can I find your documentation?
 
